@@ -45,8 +45,4 @@ const main = async (): Promise<boolean> => {
   return hasCommittedToday;
 };
 
-main().then((hasCommittedToday) =>
-  hasCommittedToday
-    ? console.log('true')
-    : console.log('false')
-);
+export default main();
