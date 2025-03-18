@@ -21,7 +21,8 @@ jobs:
       id: run_main
       run: |
         output=$(bun main.ts)
-        echo "commit_status=$output" >> $GITHUB_ENV
+        echo "::set-output name=commit_status::$output"
+      continue-on-error: true
 
     - name: Display commit status
       run: |
