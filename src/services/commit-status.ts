@@ -1,6 +1,6 @@
-import { octokit } from './src/octokit';
-import type { ListForUser } from './src/types/octokit';
-import { isSameDay } from './src/utils/date';
+import { octokit } from '../octokit';
+import type { ListForUser } from '../types/octokit';
+import { isSameDay } from '../utils/date';
 
 const fetchLatestPushedRepo = async (username: string) => {
   try {
@@ -18,7 +18,7 @@ const fetchLatestPushedRepo = async (username: string) => {
   }
 };
 
-const hasUserCommittedToday = (repo: ListForUser): boolean => {
+const hasRepoBeenPushedToday = (repo: ListForUser): boolean => {
   if (!repo.pushed_at) {
     console.log('No commits found.');
     return false;
@@ -30,23 +30,21 @@ const hasUserCommittedToday = (repo: ListForUser): boolean => {
   return isSameDay(lastCommitDate, today);
 };
 
-async function checkUserCommitStatus(username: string): Promise<boolean> {
+export const hasUserCommittedToday = async (
+  username: string
+): Promise<boolean> => {
   const repo = await fetchLatestPushedRepo(username);
   if (!repo) {
     console.log('No repositories found.');
     return false;
   }
 
-  return hasUserCommittedToday(repo);
-}
+  const result = hasRepoBeenPushedToday(repo);
+  if (result) {
+    console.log('✅ You have made a commit today!');
+  } else {
+    console.log('❌ No commits today.');
+  }
 
-const main = async (): Promise<boolean> => {
-  const hasCommittedToday = await checkUserCommitStatus('DevWedeloper');
-  return hasCommittedToday;
+  return result;
 };
-
-main().then((hasCommittedToday) =>
-  hasCommittedToday
-    ? console.log('true')
-    : console.log('false')
-);
