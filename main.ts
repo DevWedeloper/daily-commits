@@ -45,4 +45,4 @@ const main = async (): Promise<boolean> => {
   return hasCommittedToday;
 };
 
-await main();
+main().then((hasCommittedToday) => hasCommittedToday);
