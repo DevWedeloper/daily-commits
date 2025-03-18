@@ -1,0 +1,13 @@
+name: Keep Workflow Alive  # Name of the workflow
+
+on:
+  schedule:
+    - cron: "0 0 * * *"  # Runs every day at midnight UTC
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Workflow Keepalive
+        uses: liskin/gh-workflow-keepalive@v1.2.1
