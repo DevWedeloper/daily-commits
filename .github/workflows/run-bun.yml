@@ -25,9 +25,8 @@ jobs:
 
     - name: Display commit status
       run: |
-        if [ "${{ env.commit_status }}" = "true" ]; then
+        if [ "${{ steps.run_main.outputs.commit_status }}" = "true" ]; then
           echo "✅ You have made a commit today!"
         else
           echo "❌ No commits today."
         fi
-
