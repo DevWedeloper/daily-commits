@@ -45,4 +45,8 @@ const main = async (): Promise<boolean> => {
   return hasCommittedToday;
 };
 
-main().then((hasCommittedToday) => hasCommittedToday);
+main().then((hasCommittedToday) =>
+  hasCommittedToday
+    ? console.log('✅ You have made a commit today!')
+    : console.log('❌ No commits today.')
+);
