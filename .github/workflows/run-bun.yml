@@ -18,4 +18,16 @@ jobs:
       run: bun install
 
     - name: Run main.ts
-      run: bun main.ts
+      id: run_main
+      run: |
+        output=$(bun main.ts)
+        echo "::set-output name=commit_status::$output"
+      continue-on-error: true
+
+    - name: Display commit status
+      run: |
+        if [ "${{ steps.run_main.outputs.commit_status }}" = "true" ]; then
+          echo "✅ You have made a commit today!"
+        else
+          echo "❌ No commits today."
+        fi
