@@ -1,6 +1,9 @@
 {
   "name": "daily-commits",
   "type": "module",
+  "scripts": {
+    "test": "bun test ./**/*.spec.ts"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },
