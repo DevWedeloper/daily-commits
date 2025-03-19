@@ -7,14 +7,14 @@ export const autoCommitAndPush = async () => {
 
     fs.appendFileSync(
       'commit_log.txt',
-      `Automated commit on ${new Date().toISOString()}\n`
+      `Automated commit on ${new Date().toUTCString()}\n`
     );
 
     await git.addConfig('user.name', 'DevWedeloper');
     await git.addConfig('user.email', 'vicnathangabrielle@gmail.com');
 
     await git.add('commit_log.txt');
-    await git.commit(`Automated commit on ${new Date().toISOString()}`);
+    await git.commit(`Automated commit on ${new Date().toUTCString()}`);
     await git.push();
 
     console.log('Changes have been pushed successfully.');
