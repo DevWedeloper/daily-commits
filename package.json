@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "@octokit/rest": "^21.1.1",
+    "@types/nodemailer": "^6.4.17",
+    "nodemailer": "^6.10.0",
     "simple-git": "^3.27.0"
   }
 }

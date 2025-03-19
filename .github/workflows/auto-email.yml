@@ -1,0 +1,23 @@
+name: Auto Email
+
+on:
+  schedule:
+    - cron: "15 14 * * *"  # Runs daily at 10:15 PM GMT+8 (which is 2:15 PM UTC)
+  workflow_dispatch:
+
+jobs:
+  auto-email:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Run auto-email.ts
+        run: bun src/scripts/auto-email.ts
