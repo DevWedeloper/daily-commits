@@ -16,7 +16,9 @@ describe('sendEmail', () => {
   });
 
   it('should log an error if email sending fails', async () => {
-    const consoleErrorSpy = spyOn(console, 'error').mockImplementation(() => {});
+    const consoleErrorSpy = spyOn(console, 'error').mockImplementation(
+      () => {}
+    );
 
     mock.module('nodemailer', () => ({
       createTransport: () => ({
@@ -27,7 +29,7 @@ describe('sendEmail', () => {
     await sendEmail();
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(
-      expect.anything(),
+      'Error sending email:',
       expect.any(Error)
     );
   });
