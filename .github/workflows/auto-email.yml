@@ -20,4 +20,9 @@ jobs:
         run: bun install
 
       - name: Run auto-email.ts
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_SENDER: ${{ secrets.SMTP_SENDER }}
         run: bun src/scripts/auto-email.ts
