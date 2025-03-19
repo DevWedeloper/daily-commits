@@ -16,7 +16,7 @@ describe('sendEmail', () => {
   });
 
   it('should log an error if email sending fails', async () => {
-    const consoleErrorSpy = spyOn(console, 'error');
+    const consoleErrorSpy = spyOn(console, 'error').mockImplementation(() => {});
 
     mock.module('nodemailer', () => ({
       createTransport: () => ({
