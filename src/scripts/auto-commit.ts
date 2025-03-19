@@ -3,10 +3,9 @@ import simpleGit from 'simple-git';
 import { hasUserCommittedToday } from '../services/commit-status';
 
 const checkAndCommit = async () => {
-  try {
-    const hasComittedToday = await hasUserCommittedToday('DevWedeloper');
-
-    if (!hasComittedToday) {
+  const hasComittedToday = await hasUserCommittedToday('DevWedeloper');
+  if (!hasComittedToday) {
+    try {
       const git = simpleGit();
 
       fs.appendFileSync(
@@ -22,11 +21,11 @@ const checkAndCommit = async () => {
       await git.push();
 
       console.log('Changes have been pushed successfully.');
-    } else {
-      console.log('Already committed today. Skipping automated commit.');
+    } catch (error) {
+      console.error('Error occurred during the commit process:', error);
     }
-  } catch (error) {
-    console.error('Error occurred during the commit process:', error);
+  } else {
+    console.log('Already committed today. Skipping automated commit.');
   }
 };
 
