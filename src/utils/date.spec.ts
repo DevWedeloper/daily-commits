@@ -55,6 +55,19 @@ describe('convertToTimezone', () => {
     expect(result.zoneName).toBe(timezone);
     expect(result.toISO()).not.toBeNull();
   });
+
+  it('should fallback to UTC if the timezone is invalid', () => {
+    const isoTimestamp = '2024-03-19T12:00:00Z';
+    const invalidTimezone = 'Invalid/Timezone';
+    spyOn(console, 'warn');
+
+    const result = convertToTimezone(isoTimestamp, invalidTimezone);
+
+    expect(console.warn).toHaveBeenCalledWith(
+      `Warning: Invalid timezone "${invalidTimezone}". Falling back to UTC.`
+    );
+    expect(result.zoneName).toBe('UTC');
+  });
 });
 
 describe('getCurrentTimeInTimezone', () => {
@@ -69,6 +82,22 @@ describe('getCurrentTimeInTimezone', () => {
 
     expect(result.zoneName).toBe(timezone);
     expect(result.toISO()).toContain('2024-03-19T'); // Ensuring correct date
+  });
+
+  it('should fallback to UTC if the timezone is invalid', () => {
+    const invalidTimezone = 'Invalid/Timezone';
+
+    // Mock DateTime.now() to return a fixed time
+    const mockDateTime = DateTime.fromISO('2024-03-19T12:00:00Z');
+    spyOn(DateTime, 'now').mockReturnValue(mockDateTime as DateTime<true>);
+    spyOn(console, 'warn');
+
+    const result = getCurrentTimeInTimezone(invalidTimezone);
+
+    expect(console.warn).toHaveBeenCalledWith(
+      `Warning: Invalid timezone "${invalidTimezone}". Falling back to UTC.`
+    );
+    expect(result.zoneName).toBe('UTC');
   });
 });
 
