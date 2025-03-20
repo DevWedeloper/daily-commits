@@ -1,6 +1,11 @@
+import env from '../../env';
 import { octokit } from '../octokit';
 import type { ListForUser } from '../types/octokit';
-import { isSameDay } from '../utils/date';
+import {
+  convertToTimezone,
+  getCurrentTimeInTimezone,
+  isSameDay,
+} from '../utils/date';
 
 const fetchLatestPushedRepo = async (username: string) => {
   try {
@@ -24,8 +29,11 @@ const hasRepoBeenPushedToday = (repo: ListForUser): boolean => {
     return false;
   }
 
-  const lastCommitDate = new Date(repo.pushed_at);
-  const today = new Date();
+  const lastCommitDate = convertToTimezone(
+    repo.pushed_at,
+    env.USER_TIMEZONE
+  ).toJSDate();
+  const today = getCurrentTimeInTimezone(env.USER_TIMEZONE).toJSDate();
 
   return isSameDay(lastCommitDate, today);
 };

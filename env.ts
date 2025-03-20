@@ -6,6 +6,7 @@ const envSchema = z.object({
   SMTP_USER: z.string().min(1),
   SMTP_PASSWORD: z.string().min(1),
   SMTP_SENDER: z.string().min(1),
+  USER_TIMEZONE: z.string().min(1),
 });
 
 const env = envSchema.parse(process.env);

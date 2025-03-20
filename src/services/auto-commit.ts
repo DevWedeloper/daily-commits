@@ -1,12 +1,12 @@
 import fs from 'fs';
 import simpleGit from 'simple-git';
-
-const getFormattedTimestamp = () => new Date().toUTCString();
+import env from '../../env';
+import { getFormattedTimestamp } from '../utils/date';
 
 export const autoCommitAndPush = async () => {
   try {
     const git = simpleGit();
-    const timestamp = getFormattedTimestamp();
+    const timestamp = getFormattedTimestamp(env.USER_TIMEZONE);
 
     fs.appendFileSync('commit_log.txt', `Automated commit on ${timestamp}\n`);
 

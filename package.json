@@ -12,7 +12,9 @@
   },
   "dependencies": {
     "@octokit/rest": "^21.1.1",
+    "@types/luxon": "^3.4.2",
     "@types/nodemailer": "^6.4.17",
+    "luxon": "^3.5.0",
     "nodemailer": "^6.10.0",
     "simple-git": "^3.27.0",
     "zod": "^3.24.2"
