@@ -22,7 +22,9 @@ jobs:
       - name: Run auto-email.ts
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_USERNAME: ${{ secrets.GH_USERNAME }}
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           SMTP_SENDER: ${{ secrets.SMTP_SENDER }}
+          USER_TIMEZONE: "${{ secrets.USER_TIMEZONE }}"
         run: bun src/scripts/auto-email.ts
