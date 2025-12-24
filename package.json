@@ -2,6 +2,7 @@
   "name": "daily-commits",
   "type": "module",
   "scripts": {
+    "backdate-commit": "bun src/scripts/auto-backdate-commit.ts",
     "test": "bun test ./**/*.spec.ts"
   },
   "devDependencies": {
