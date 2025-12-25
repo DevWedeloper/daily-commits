@@ -1,16 +1,13 @@
-#!/usr/bin/env bun
 /* eslint-disable node/prefer-global/process */
 import fs from 'node:fs'
 import simpleGit from 'simple-git'
 import { formatDateGMT8 as formatDate } from '~/utils/date'
 import { dateExists, findInsertIndex } from '~/utils/log'
 
-// ----- CONFIG -----
 const LOG_FILE = 'commit_log.txt'
 const GIT_USER_NAME = 'DevWedeloper'
 const GIT_USER_EMAIL = 'vicnathangabrielle@gmail.com'
 
-// ----- MAIN -----
 async function main() {
   const args = process.argv.slice(2)
   if (!args) {
