@@ -1,12 +1,8 @@
 /* eslint-disable no-console */
-import type { ListForUser } from '../types/octokit'
-import env from '../env'
-import { octokit } from '../octokit'
-import {
-  convertToTimezone,
-  getCurrentTimeInTimezone,
-  isSameDay,
-} from '../utils/date'
+import type { ListForUser } from '~/types/octokit'
+import env from '~/env'
+import { octokit } from '~/octokit'
+import { convertToTimezone, getCurrentTimeInTimezone, isSameDay } from '~/utils/date'
 
 async function fetchLatestPushedRepo(username: string) {
   try {

@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 import fs from 'node:fs'
 import simpleGit from 'simple-git'
-import env from '../env'
-import { getFormattedTimestamp } from '../utils/date'
+import env from '~/env'
+import { getFormattedTimestamp } from '~/utils/date'
 
 export async function autoCommitAndPush() {
   try {
