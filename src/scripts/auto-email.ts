@@ -1,4 +1,4 @@
-import env from '../../env';
+import env from '../env';
 import { hasUserCommittedToday } from '../services/commit-status';
 import { sendEmail } from '../services/send-email';
 

@@ -1,6 +1,6 @@
 import fs from 'fs';
 import simpleGit from 'simple-git';
-import env from '../../env';
+import env from '../env';
 import { getFormattedTimestamp } from '../utils/date';
 
 export const autoCommitAndPush = async () => {

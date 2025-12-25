@@ -1,4 +1,4 @@
-import env from '../../env';
+import env from '../env';
 import { octokit } from '../octokit';
 import type { ListForUser } from '../types/octokit';
 import {
