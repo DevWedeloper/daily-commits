@@ -5,7 +5,7 @@ import {
   getCurrentTimeInTimezone,
   getFormattedTimestamp,
   isSameDay,
-} from './date'
+} from './timezone'
 
 describe('isSameDay function', () => {
   it('should return true for the same date', () => {

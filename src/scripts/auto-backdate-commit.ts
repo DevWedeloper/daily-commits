@@ -2,58 +2,13 @@
 /* eslint-disable node/prefer-global/process */
 import fs from 'node:fs'
 import simpleGit from 'simple-git'
+import { formatDateGMT8 as formatDate } from '~/utils/date'
+import { dateExists, findInsertIndex } from '~/utils/log'
 
 // ----- CONFIG -----
 const LOG_FILE = 'commit_log.txt'
 const GIT_USER_NAME = 'DevWedeloper'
 const GIT_USER_EMAIL = 'vicnathangabrielle@gmail.com'
-
-// ----- UTILS -----
-function formatDate(date: Date) {
-  // Format like: Sat, 06 Dec 2025 12:00:00 GMT+08:00
-  const pad = (n: number) => n.toString().padStart(2, '0')
-
-  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-
-  const gmtOffset = 8 // GMT+8
-  const local = new Date(date.getTime() + gmtOffset * 60 * 60 * 1000)
-
-  const dayName = days[local.getUTCDay()]
-  const day = pad(local.getUTCDate())
-  const month = months[local.getUTCMonth()]
-  const year = local.getUTCFullYear()
-  const hour = pad(local.getUTCHours())
-  const minute = pad(local.getUTCMinutes())
-  const second = pad(local.getUTCSeconds())
-
-  return `${dayName}, ${day} ${month} ${year} ${hour}:${minute}:${second} GMT+08:00`
-}
-
-// Find insertion index in log file to maintain chronological order
-function findInsertIndex(lines: string[], targetDate: Date) {
-  for (let i = 0; i < lines.length; i++) {
-    const match = lines[i].match(/\d{2} \w{3} \d{4}/)
-    if (!match)
-      continue
-    const lineDate = new Date(match[0])
-    if (lineDate > targetDate)
-      return i
-  }
-  return lines.length
-}
-
-// Check if a date already exists in the log
-function dateExists(lines: string[], targetDate: Date) {
-  const targetDay = targetDate.toDateString()
-  return lines.some((line) => {
-    const match = line.match(/\d{2} \w{3} \d{4}/)
-    if (!match)
-      return false
-    const lineDate = new Date(match[0])
-    return lineDate.toDateString() === targetDay
-  })
-}
 
 // ----- MAIN -----
 async function main() {
