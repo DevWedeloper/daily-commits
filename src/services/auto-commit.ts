@@ -1,24 +1,26 @@
-import fs from 'fs';
-import simpleGit from 'simple-git';
-import env from '../env';
-import { getFormattedTimestamp } from '../utils/date';
+/* eslint-disable no-console */
+import fs from 'node:fs'
+import simpleGit from 'simple-git'
+import env from '../env'
+import { getFormattedTimestamp } from '../utils/date'
 
-export const autoCommitAndPush = async () => {
+export async function autoCommitAndPush() {
   try {
-    const git = simpleGit();
-    const timestamp = getFormattedTimestamp(env.USER_TIMEZONE);
+    const git = simpleGit()
+    const timestamp = getFormattedTimestamp(env.USER_TIMEZONE)
 
-    fs.appendFileSync('commit_log.txt', `Automated commit on ${timestamp}\n`);
+    fs.appendFileSync('commit_log.txt', `Automated commit on ${timestamp}\n`)
 
-    await git.addConfig('user.name', 'DevWedeloper');
-    await git.addConfig('user.email', 'vicnathangabrielle@gmail.com');
+    await git.addConfig('user.name', 'DevWedeloper')
+    await git.addConfig('user.email', 'vicnathangabrielle@gmail.com')
 
-    await git.add('commit_log.txt');
-    await git.commit(`Automated commit on ${timestamp}`);
-    await git.push();
+    await git.add('commit_log.txt')
+    await git.commit(`Automated commit on ${timestamp}`)
+    await git.push()
 
-    console.log('Changes have been pushed successfully.');
-  } catch (error) {
-    console.error('Error occurred during the commit process:', error);
+    console.log('Changes have been pushed successfully.')
   }
-};
+  catch (error) {
+    console.error('Error occurred during the commit process:', error)
+  }
+}

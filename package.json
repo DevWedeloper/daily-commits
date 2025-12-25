@@ -3,12 +3,8 @@
   "type": "module",
   "scripts": {
     "backdate-commit": "bun src/scripts/auto-backdate-commit.ts",
-    "test": "bun test ./**/*.spec.ts"
-  },
-  "devDependencies": {
-    "@antfu/eslint-config": "^6.7.3",
-    "@types/bun": "latest",
-    "eslint": "^9.39.2"
+    "test": "bun test ./**/*.spec.ts",
+    "lint": "eslint ."
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -21,5 +17,10 @@
     "nodemailer": "^6.10.0",
     "simple-git": "^3.27.0",
     "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^6.7.3",
+    "@types/bun": "latest",
+    "eslint": "^9.39.2"
   }
 }

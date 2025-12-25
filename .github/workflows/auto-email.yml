@@ -2,7 +2,7 @@ name: Auto Email
 
 on:
   schedule:
-    - cron: "15 14 * * *"  # Runs daily at 10:15 PM GMT+8 (which is 2:15 PM UTC)
+    - cron: '15 14 * * *' # Runs daily at 10:15 PM GMT+8 (which is 2:15 PM UTC)
   workflow_dispatch:
 
 jobs:
@@ -26,5 +26,5 @@ jobs:
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           SMTP_SENDER: ${{ secrets.SMTP_SENDER }}
-          USER_TIMEZONE: "${{ secrets.USER_TIMEZONE }}"
+          USER_TIMEZONE: '${{ secrets.USER_TIMEZONE }}'
         run: bun src/scripts/auto-email.ts

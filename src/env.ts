@@ -1,4 +1,5 @@
-import { z } from 'zod';
+/* eslint-disable node/prefer-global/process */
+import { z } from 'zod'
 
 const envSchema = z.object({
   GH_TOKEN: z.string().min(1),
@@ -7,8 +8,8 @@ const envSchema = z.object({
   SMTP_PASSWORD: z.string().min(1),
   SMTP_SENDER: z.string().min(1),
   USER_TIMEZONE: z.string().min(1),
-});
+})
 
-const env = envSchema.parse(process.env);
+const env = envSchema.parse(process.env)
 
-export default env;
+export default env

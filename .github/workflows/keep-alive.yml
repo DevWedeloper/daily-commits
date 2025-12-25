@@ -1,9 +1,9 @@
-name: Keep Workflow Alive  # Name of the workflow
+name: Keep Workflow Alive # Name of the workflow
 
 on:
   schedule:
-    - cron: "0 0 * * *"  # Runs every day at midnight UTC
-  workflow_dispatch:  # Allows manual trigger
+    - cron: '0 0 * * *' # Runs every day at midnight UTC
+  workflow_dispatch: # Allows manual trigger
 
 jobs:
   keepalive:
