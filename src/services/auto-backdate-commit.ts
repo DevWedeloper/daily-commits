@@ -34,24 +34,12 @@ export async function autoBackdateCommit(datesArgs: string[], isDev: boolean) {
 
     await git.add(LOG_FILE)
 
-    // Save original env variables
-    const originalAuthorDate = process.env.GIT_AUTHOR_DATE
-    const originalCommitterDate = process.env.GIT_COMMITTER_DATE
+    process.env.GIT_AUTHOR_DATE = `${timestamp}`
+    process.env.GIT_COMMITTER_DATE = `${timestamp}`
 
-    try {
-      process.env.GIT_AUTHOR_DATE = `${timestamp}`
-      process.env.GIT_COMMITTER_DATE = `${timestamp}`
+    await git.commit(`Backdated commit on ${timestamp}`, LOG_FILE)
 
-      // Commit the file
-      await git.commit(`Backdated commit on ${timestamp}`, LOG_FILE)
-
-      console.log(`Committed backdated entry for ${timestamp}`)
-    }
-    finally {
-      // Restore original env variables
-      process.env.GIT_AUTHOR_DATE = originalAuthorDate
-      process.env.GIT_COMMITTER_DATE = originalCommitterDate
-    }
+    console.log(`Committed backdated entry for ${timestamp}`)
   }
 
   if (!isDev) {
