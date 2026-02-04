@@ -7,14 +7,27 @@ import env from '~/env'
 import { getFormattedTimestamp } from '~/utils/date'
 import { dateExists, findInsertIndex } from '~/utils/log'
 
-export async function autoBackdateCommit(datesArgs: string[], isDev: boolean) {
+export async function autoBackdateCommit(datesArgs: string[], isDev: boolean, isDryRun: boolean) {
+  const exec = async (fn: () => Promise<any> | void, label?: string) => {
+    if (isDryRun) {
+      if (label) {
+        console.log(`[dry-run] ${label}`)
+      }
+      return
+    }
+
+    await fn()
+  }
+
   const dates = datesArgs
     .map(d => new Date(d.trim()))
     .filter(d => !Number.isNaN(d.getTime()))
 
   const git = simpleGit()
-  await git.addConfig('user.name', GIT_USER_NAME)
-  await git.addConfig('user.email', GIT_USER_EMAIL)
+  await exec(async () => {
+    await git.addConfig('user.name', GIT_USER_NAME)
+    await git.addConfig('user.email', GIT_USER_EMAIL)
+  })
 
   const lines = fs.existsSync(LOG_FILE)
     ? fs.readFileSync(LOG_FILE, 'utf-8').split('\n').filter(line => line.trim() !== '')
@@ -32,18 +45,20 @@ export async function autoBackdateCommit(datesArgs: string[], isDev: boolean) {
     lines.splice(insertIndex, 0, `Backdated commit on ${timestamp}`)
     fs.writeFileSync(LOG_FILE, lines.join('\n'))
 
-    await git.add(LOG_FILE)
+    await exec(() => git.add(LOG_FILE))
 
-    process.env.GIT_AUTHOR_DATE = `${timestamp}`
-    process.env.GIT_COMMITTER_DATE = `${timestamp}`
+    await exec(async () => {
+      process.env.GIT_AUTHOR_DATE = timestamp
+      process.env.GIT_COMMITTER_DATE = timestamp
 
-    await git.commit(`Backdated commit on ${timestamp}`, LOG_FILE)
+      await git.commit(`Backdated commit on ${timestamp}`, LOG_FILE)
+    })
 
     console.log(`Committed backdated entry for ${timestamp}`)
   }
 
   if (!isDev) {
-    await git.push()
+    await exec(() => git.push())
     console.log('All backdated commits processed and pushed successfully.')
   }
   else {
