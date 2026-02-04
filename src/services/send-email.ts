@@ -1,4 +1,5 @@
 import { createTransport } from 'nodemailer'
+import { GIT_USER_EMAIL } from '~/constants'
 import env from '~/env'
 
 export async function sendEmail() {
@@ -13,7 +14,7 @@ export async function sendEmail() {
 
   const mailOptions = {
     from: env.SMTP_SENDER,
-    to: 'vicnathangabrielle@gmail.com',
+    to: GIT_USER_EMAIL,
     subject: 'Reminder: Commit Today',
     text: 'You have not committed today yet. Please remember to make your commit!',
   }

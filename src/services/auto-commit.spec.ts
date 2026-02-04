@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import { beforeEach, describe, expect, it, jest, mock, spyOn } from 'bun:test'
+import { GIT_USER_EMAIL, GIT_USER_NAME, LOG_FILE } from '~/constants'
 import { autoCommitAndPush } from './auto-commit'
 
 mock.module('fs', () => {
@@ -35,17 +36,17 @@ describe('autoCommitAndPush', () => {
     await autoCommitAndPush()
 
     expect(fs.appendFileSync).toHaveBeenCalledWith(
-      'commit_log.txt',
+      LOG_FILE,
       expect.stringContaining('Automated commit on'),
     )
 
-    expect(addConfigMock).toHaveBeenCalledWith('user.name', 'DevWedeloper')
+    expect(addConfigMock).toHaveBeenCalledWith('user.name', GIT_USER_NAME)
     expect(addConfigMock).toHaveBeenCalledWith(
       'user.email',
-      'vicnathangabrielle@gmail.com',
+      GIT_USER_EMAIL,
     )
 
-    expect(addMock).toHaveBeenCalledWith('commit_log.txt')
+    expect(addMock).toHaveBeenCalledWith(LOG_FILE)
     expect(commitMock).toHaveBeenCalledWith(
       expect.stringContaining('Automated commit on'),
     )

@@ -2,12 +2,9 @@
 /* eslint-disable no-console */
 import fs from 'node:fs'
 import simpleGit from 'simple-git'
+import { GIT_USER_EMAIL, GIT_USER_NAME, LOG_FILE } from '~/constants'
 import { formatDateGMT8 as formatDate } from '~/utils/date'
 import { dateExists, findInsertIndex } from '~/utils/log'
-
-const LOG_FILE = 'commit_log.txt'
-const GIT_USER_NAME = 'DevWedeloper'
-const GIT_USER_EMAIL = 'vicnathangabrielle@gmail.com'
 
 export async function autoBackdateCommit(datesArgs: string[], isDev: boolean) {
   const dates = datesArgs
