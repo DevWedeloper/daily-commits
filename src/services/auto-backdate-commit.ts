@@ -3,7 +3,8 @@
 import fs from 'node:fs'
 import simpleGit from 'simple-git'
 import { GIT_USER_EMAIL, GIT_USER_NAME, LOG_FILE } from '~/constants'
-import { formatDateGMT8 as formatDate } from '~/utils/date'
+import env from '~/env'
+import { getFormattedTimestamp } from '~/utils/date'
 import { dateExists, findInsertIndex } from '~/utils/log'
 
 export async function autoBackdateCommit(datesArgs: string[], isDev: boolean) {
@@ -20,7 +21,7 @@ export async function autoBackdateCommit(datesArgs: string[], isDev: boolean) {
     : []
 
   for (const targetDate of dates) {
-    const timestamp = formatDate(targetDate)
+    const timestamp = getFormattedTimestamp(targetDate, env.USER_TIMEZONE)
 
     if (dateExists(lines, targetDate)) {
       console.log(`Skipped ${timestamp} — already exists in log.`)

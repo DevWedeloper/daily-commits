@@ -8,7 +8,7 @@ import { getFormattedTimestamp } from '~/utils/date'
 export async function autoCommitAndPush() {
   try {
     const git = simpleGit()
-    const timestamp = getFormattedTimestamp(env.USER_TIMEZONE)
+    const timestamp = getFormattedTimestamp(new Date(), env.USER_TIMEZONE)
 
     fs.appendFileSync(LOG_FILE, `Automated commit on ${timestamp}\n`)
 

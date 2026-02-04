@@ -27,9 +27,9 @@ export function getCurrentTimeInTimezone(timezone: string) {
   return applyTimezone(dt, timezone)
 }
 
-export function getFormattedTimestamp(timezone: string): string {
-  const dt = DateTime.now()
-  return applyTimezone(dt, timezone).toFormat(
+export function getFormattedTimestamp(date: Date, timezone: string): string {
+  const dateTime = DateTime.fromJSDate(date)
+  return applyTimezone(dateTime, timezone).toFormat(
     'EEE, dd LLL yyyy HH:mm:ss \'GMT\'ZZ',
   )
 }
