@@ -1,3 +1,4 @@
+/* eslint-disable node/prefer-global/process */
 /* eslint-disable no-console */
 import fs from 'node:fs'
 import simpleGit from 'simple-git'
@@ -34,11 +35,25 @@ export async function autoBackdateCommit(datesArgs: string[], isDev: boolean) {
     fs.writeFileSync(LOG_FILE, lines.join('\n'))
 
     await git.add(LOG_FILE)
-    await git.commit(`Backdated commit on ${timestamp}`, undefined, {
-      '--date': targetDate.toISOString(),
-    })
 
-    console.log(`Committed backdated entry for ${timestamp}`)
+    // Save original env variables
+    const originalAuthorDate = process.env.GIT_AUTHOR_DATE
+    const originalCommitterDate = process.env.GIT_COMMITTER_DATE
+
+    try {
+      process.env.GIT_AUTHOR_DATE = `${timestamp}`
+      process.env.GIT_COMMITTER_DATE = `${timestamp}`
+
+      // Commit the file
+      await git.commit(`Backdated commit on ${timestamp}`, LOG_FILE)
+
+      console.log(`Committed backdated entry for ${timestamp}`)
+    }
+    finally {
+      // Restore original env variables
+      process.env.GIT_AUTHOR_DATE = originalAuthorDate
+      process.env.GIT_COMMITTER_DATE = originalCommitterDate
+    }
   }
 
   if (!isDev) {
