@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import fs from 'node:fs'
+import { DateTime } from 'luxon'
 import simpleGit from 'simple-git'
 import { GIT_USER_EMAIL, GIT_USER_NAME, LOG_FILE } from '~/constants'
 import env from '~/env'
@@ -9,6 +10,7 @@ export async function autoCommitAndPush() {
   try {
     const git = simpleGit()
     const timestamp = getFormattedTimestamp(new Date(), env.USER_TIMEZONE)
+    const isoDate = DateTime.now().setZone(env.USER_TIMEZONE).toISO()
 
     fs.appendFileSync(LOG_FILE, `Automated commit on ${timestamp}\n`)
 
@@ -16,7 +18,9 @@ export async function autoCommitAndPush() {
     await git.addConfig('user.email', GIT_USER_EMAIL)
 
     await git.add(LOG_FILE)
-    await git.commit(`Automated commit on ${timestamp}`)
+    await git.commit(`Automated commit on ${timestamp}`, undefined, {
+      '--date': isoDate,
+    })
     await git.push()
 
     console.log('Changes have been pushed successfully.')
